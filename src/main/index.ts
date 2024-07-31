@@ -1,23 +1,12 @@
 import express from "express";
-
-import { config } from "dotenv";
-
-config();
+import config from "./config";
+import { defineRoutes } from "./adapters/rest/routes";
+import logger from "./config/logger.config";
 
 const app = express();
 
-app.post("/shorten", (request, response) => {
-    response.json({
-        newUrl: "mock.js"
-    });
-});
+defineRoutes(app);
 
-app.get("/:short_url", (request, response) => {
-    response.json({
-        newUrl: "mock.js"
-    });
-});
-
-app.listen(process.env.SERVER_PORT || 3030, () => {
-    console.log("URL SHORTENER HAS BEEN INITILAIZED");
+app.listen(config.SERVER_PORT, () => {
+	logger.info(`URL Shortener API running on port ${config.SERVER_PORT}`);
 });

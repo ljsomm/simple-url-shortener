@@ -6,6 +6,6 @@ services:
     environment:
       - MYSQL_ROOT_USERNAME=${DB_USERNAME}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      - MYSQL_DATABASE=db_shortener
+      - MYSQL_DATABASE=${DB_NAME}
     ports:
       - 3306:3306

@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS tb_url (
+    id INT NOT NULL AUTO_INCREMENT,
+    original TEXT NOT NULL,
+    CONSTRAINT pk_url
+        PRIMARY KEY(id)
+);
