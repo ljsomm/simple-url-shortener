@@ -3,7 +3,7 @@
         "esModuleInterop": true,
         "target": "ES2021",
         "module": "CommonJS",
-        "noEmitOnError":true,
-        "strict": false
+        "noEmitOnError": true,
+        "strictNullChecks": true
     }
 }

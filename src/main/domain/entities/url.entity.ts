@@ -1,4 +1,4 @@
 export class URLEntity {
-	id: string;
+	id?: number | string;
 	original: string;
 }
