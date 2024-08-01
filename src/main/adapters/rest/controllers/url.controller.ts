@@ -16,11 +16,16 @@ export class URLController {
 
 	public static async create(request: Request, response: Response) {
 		const validatorResult = URLValidator.safeParse(request.body);
-		if (!validatorResult.success) return response.status(403).json({message: JSON.parse(validatorResult.error.message).reduce((accumulator, current) => {
-			return {
-				message: `${accumulator.message};${current.message}`
-			};
-		}).message});
+		if (!validatorResult.success)
+			return response.status(403).json({
+				message: JSON.parse(validatorResult.error.message).reduce(
+					(accumulator, current) => {
+						return {
+							message: `${accumulator.message};${current.message}`,
+						};
+					},
+				).message,
+			});
 		const urlRequestDTO: IURLRequestDTO = validatorResult.data;
 		logger.info("Creating shorter url");
 		const urlResponse = await URLUseCase.createNewShortURL(urlRequestDTO.url);

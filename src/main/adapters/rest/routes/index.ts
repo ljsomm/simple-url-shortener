@@ -1,3 +1,4 @@
+import config from "../../../config";
 import logger from "../../../config/logger.config";
 import { IRouterFactory } from "../../interfaces/IRouterFactory";
 import { rateLimiterMiddleware } from "../middlewares/rate-limiter.middleware";
@@ -8,7 +9,10 @@ const routerFactoryList: IRouterFactory[] = [URLRouterFactory];
 const middlewareList: any[] = [
 	json(),
 	urlencoded({ extended: false }),
-	rateLimiterMiddleware({ maxRequests: 5, period: 5 * 1000 }),
+	rateLimiterMiddleware({
+		maxRequests: config.RATE_LIMIT_MAX_REQUEST_NUMBER,
+		period: config.RATE_LIMIT_PERIOD_SECONDS * 1000,
+	}),
 ];
 
 export function defineRoutesAndMiddlewares(application: Express) {
