@@ -8,10 +8,19 @@ import { ZodErrorFormater } from "../../../utils/zod-error-format.utils";
 export class URLController {
 	public static async show(request: Request, response: Response) {
 		logger.info(`Short URL received, checking if it exists...`);
-		const original = await URLUseCase.findOriginalURL(
-			request.params["shorten"],
-		);
-		logger.info(`Redirecting to ${original}.`);
+		let original;
+		try {
+			original = await URLUseCase.findOriginalURL(
+				request.params["shorten"],
+			);
+		}
+		catch (err) {
+			logger.error("[HTTP:404] Could not find the original URL")
+			return response.status(404).json({
+				message: err.message
+			})
+		}
+		logger.warn(`[HTTP:302] Redirecting to ${original}.`);
 		return response.status(302).redirect(original);
 	}
 
@@ -24,7 +33,7 @@ export class URLController {
 		const urlRequestDTO: IURLRequestDTO = validatorResult.data;
 		logger.info("Creating shorter url");
 		const urlResponse = await URLUseCase.createNewShortURL(urlRequestDTO.url);
-		logger.info("Shorter URL successfully created, returning it");
+		logger.info("[HTTP:201] Shorter URL successfully created, returning it");
 		return response.status(201).json(urlResponse);
 	}
 }

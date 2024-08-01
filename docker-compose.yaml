@@ -9,3 +9,21 @@ services:
       - MYSQL_DATABASE=${DB_NAME}
     ports:
       - 3306:3306
+  app:
+    container_name: ljsomm_url_shortener_app
+    build: .
+    image: ljsomm_url_shortener
+    platform: linux/amd64
+    depends_on:
+      - db
+    environment:
+     - DB_USERNAME=${DB_USERNAME}
+     - DB_PASSWORD=${DB_PASSWORD}
+     - DB_NAME=${DB_NAME}
+     - DB_HOST=db
+     - SERVER_PORT=${SERVR_PORT}
+     - APP_URL=${APP_URL}
+     - RATE_LIMIT_PERIOD_SECONDS=${RATE_LIMIT_PERIOD}
+     - RATE_LIMIT_MAX_REQUEST_NUMBER=${RATE_LIMIT_MAX_REQUEST_NUMBER}
+    ports:
+      - 3030:3030

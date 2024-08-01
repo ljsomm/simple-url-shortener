@@ -26,6 +26,7 @@ export const URLRepository: IURLPort = {
 			WHERE id = ?`,
 			[id],
 		);
+		connection.release();
 		return result[0][0];
 	},
 };

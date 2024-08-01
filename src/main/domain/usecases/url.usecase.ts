@@ -13,7 +13,14 @@ export const URLUseCase: IURLPort = {
 	},
 	async findOriginalURL(id: string): Promise<string> {
 		logger.info(`Selecting URL mapping by id ${id}`);
-		const URLRecord = await URLRepository.findByID(atob(id));
+		let URLRecord;
+		try {
+			URLRecord = await URLRepository.findByID(atob(id));
+			if(!URLRecord) throw new Error("This short URL record was not found on database")
+		}
+		catch(err) {
+			throw new Error(`It was not possible to retrieve original URL. Reason: ${err.message}`)
+		}
 		logger.info(`URLRecord successfully found`);
 		return URLRecord.original;
 	},
