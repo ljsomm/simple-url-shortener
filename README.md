@@ -14,6 +14,8 @@ This is a project that generates a shorter format to your url.
 
 On this project was prefered to use Hexagonal Architecture (Ports and Adapters) considering its scalability and easy-going in terms of platform/environment migration.
 
+![image](https://github.com/user-attachments/assets/88706a22-488d-438b-bad3-5826d15ea6ca)
+
 ## How to run 🏃
 
 There are two ways to run this app. Check the best option to you :)
