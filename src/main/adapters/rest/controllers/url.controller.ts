@@ -3,6 +3,7 @@ import logger from "../../../config/logger.config";
 import { URLUseCase } from "../../../domain/usecases/url.usecase";
 import { IURLRequestDTO } from "../../dtos/url-request.dto";
 import { URLValidator } from "../validators/url.validator";
+import { ZodErrorFormater } from "../../../utils/zod-error-format.utils";
 
 export class URLController {
 	public static async show(request: Request, response: Response) {
@@ -18,13 +19,7 @@ export class URLController {
 		const validatorResult = URLValidator.safeParse(request.body);
 		if (!validatorResult.success)
 			return response.status(403).json({
-				message: JSON.parse(validatorResult.error.message).reduce(
-					(accumulator, current) => {
-						return {
-							message: `${accumulator.message};${current.message}`,
-						};
-					},
-				).message,
+				message: ZodErrorFormater(validatorResult.error),
 			});
 		const urlRequestDTO: IURLRequestDTO = validatorResult.data;
 		logger.info("Creating shorter url");
