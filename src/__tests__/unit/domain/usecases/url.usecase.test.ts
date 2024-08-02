@@ -25,7 +25,6 @@ describe("URLUseCase", () => {
 	});
 
 	it("should retrieve the original URL", async () => {
-		console.log(`http://localhost:3030/${btoa("1")}`);
 		expect(await URLUseCase.findOriginalURL(`${btoa("1")}`)).toEqual(
 			`https://lucasjsdev.com`,
 		);
