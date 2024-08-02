@@ -16,10 +16,12 @@ export const URLUseCase: IURLPort = {
 		let URLRecord;
 		try {
 			URLRecord = await URLRepository.findByID(atob(id));
-			if(!URLRecord) throw new Error("This short URL record was not found on database")
-		}
-		catch(err) {
-			throw new Error(`It was not possible to retrieve original URL. Reason: ${err.message}`)
+			if (!URLRecord)
+				throw new Error("This short URL record was not found on database");
+		} catch (err) {
+			throw new Error(
+				`It was not possible to retrieve original URL. Reason: ${err.message}`,
+			);
 		}
 		logger.info(`URLRecord successfully found`);
 		return URLRecord.original;

@@ -10,15 +10,12 @@ export class URLController {
 		logger.info(`Short URL received, checking if it exists...`);
 		let original;
 		try {
-			original = await URLUseCase.findOriginalURL(
-				request.params["shorten"],
-			);
-		}
-		catch (err) {
-			logger.error("[HTTP:404] Could not find the original URL")
+			original = await URLUseCase.findOriginalURL(request.params["shorten"]);
+		} catch (err) {
+			logger.error("[HTTP:404] Could not find the original URL");
 			return response.status(404).json({
-				message: err.message
-			})
+				message: err.message,
+			});
 		}
 		logger.warn(`[HTTP:302] Redirecting to ${original}.`);
 		return response.status(302).redirect(original);
